@@ -25,6 +25,13 @@ if (!rpcUrl) {
   throw new Error("Please set your RPC_URL in a .env file");
 }
 
+const gasPrice: number | undefined = process.env.GAS_PRICE ? Number(process.env.GAS_PRICE) : undefined;
+if (gasPrice === undefined) {
+  throw new Error("Please set your GAS_PRICE in a .env file");
+}
+
+
+
 const chainIds = {
   "arbitrum-mainnet": 42161,
   avalanche: 43114,
@@ -58,6 +65,7 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
     },
     chainId: chainIds[chain],
     url: jsonRpcUrl,
+    gasPrice: gasPrice,
   };
 }
 
